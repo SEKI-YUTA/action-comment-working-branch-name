@@ -1,0 +1,37 @@
+name: 'Comment Working Branch Name'
+description: 'Adds a comment with a suggested branch name based on issue number and app name'
+author: 'SEKI-YUTA'
+
+inputs:
+  app-name:
+    description: 'The name of your application, which will be used in the branch name'
+    required: true
+    default: 'app'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Process branch name
+      id: process-name
+      shell: bash
+      run: |
+        PROCESSED_NAME=$(echo "${{ inputs.app-name }}" | sed "s/'/-/g" | sed "s/ /-/g" | sed "s/[^a-zA-Z0-9-]//g")
+        echo "processed_name=$PROCESSED_NAME" >> $GITHUB_OUTPUT
+
+    - name: Add comment
+      shell: bash
+      run: gh issue comment "$NUMBER" --body "$BODY"
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+        NUMBER: ${{ github.event.issue.number }}
+        BODY: |
+          This issue's work branch is "${{ steps.process-name.outputs.processed_name }}-${{github.event.issue.number}}".
+          branch name:
+          ```
+          ${{ steps.process-name.outputs.processed_name }}-${{github.event.issue.number}}
+          ```
+          To checkout this branch, run the following command:
+          ```
+          git checkout -b ${{ steps.process-name.outputs.processed_name }}-${{github.event.issue.number}}
+          ```
