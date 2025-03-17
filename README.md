@@ -27,7 +27,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Comment Branch Name
-              uses: your-username/comment-branch-name@v1
+              uses: SEKI-YUTA/action-comment-working-branch-name@v1.0.1
               with:
                   app-name: "Your App Name"
 ```
