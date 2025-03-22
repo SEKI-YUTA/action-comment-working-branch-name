@@ -35,8 +35,8 @@ jobs:
 ## Inputs
 
 | Input      | Description                                                       | Required | Default |
-| ---------- | ----------------------------------------------------------------- | -------- | ------- | --- |
-| `app-name` | The name of your application that will be used in the branch name | Yes      | `app`   |     |
+| ---------- | ----------------------------------------------------------------- | -------- | ------- |
+| `app-name` | The name of your application that will be used in the branch name | Yes      | `app`   |
 
 ## Example
 
